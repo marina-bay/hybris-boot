@@ -225,12 +225,14 @@ else
     ASSERT_DEVICE := $(subst |,\|,$(shell $(LOCAL_PATH)/assert-device $(TARGET_OTA_ASSERT_DEVICE)))
 endif
 
-USE_SET_METADATA := $(shell test $(ANDROID_VERSION_MAJOR) -eq 4 -a $(ANDROID_VERSION_MINOR) -ge 4 -o $(ANDROID_VERSION_MAJOR) -ge 5 && echo true)
+# "set_metadata" is not supported by Oreo's bootable/recovery/updater/install.cpp
+# "set_perm" is ancient and not supported since Lollipop
+USE_SET_METADATA := $(shell test $(ANDROID_VERSION_MAJOR) -ge 5 -a $(ANDROID_VERSION_MAJOR) -lt 7 && echo true)
 
 ifeq ($(USE_SET_METADATA),true)
 SET_PERMISSIONS := set_metadata("/tmp/updater-unpack.sh", "uid", 0, "gid", 0, "mode", 0755);
 else
-SET_PERMISSIONS := set_perm(0, 0, 755, "/tmp/updater-unpack.sh");
+SET_PERMISSIONS := ""
 endif
 
 $(LOCAL_BUILT_MODULE): $(UPDATER_SCRIPT_SRC)
