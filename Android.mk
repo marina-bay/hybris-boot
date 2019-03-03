@@ -278,7 +278,7 @@ else
 $(warning Skipping build of hybris-updater-script since HYBRIS_BOOT_PART is not specified)
 endif
 
-HYBRIS_COMMON_ANDROID8_TARGETS := e2fsdroid ramdisk systemimage libselinux_stubs libsurfaceflinger libsf_compat_layer libhwc2_compat_layer
+HYBRIS_COMMON_ANDROID8_TARGETS := e2fsdroid ramdisk libselinux_stubs libsurfaceflinger libsf_compat_layer libhwc2_compat_layer
 # Legacy-partitioned devices have no need to build slotselect or vendorimage
 ifeq ($(BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED),true)
 	HYBRIS_COMMON_ANDROID8_TARGETS += vendorimage bootctl
