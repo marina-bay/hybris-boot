@@ -286,6 +286,9 @@ endif
 # Generic test if dm-verity is enabled
 ifneq ($(PRODUCT_SYSTEM_VERITY_PARTITION),)
 	HYBRIS_COMMON_ANDROID8_TARGETS += verity_signer boot_signer
+else
+	# TODO: BootSignature is needed by the build system (or only because still calling to verity in device-sony-tone?)
+	#HYBRIS_COMMON_ANDROID8_TARGETS += BootSignature
 endif
 
 ifeq ($(shell test $(ANDROID_VERSION_MAJOR) -ge 8 && echo true),true)
