@@ -37,7 +37,9 @@ HYBRIS_R_ALWAYSDEBUG := 1
 
 # Force deferred assignment
 
-HYBRIS_FIXUP_MOUNTS := $(shell ls -1 $(LOCAL_PATH)/../fixup-mountpoints $(LOCAL_PATH)/fixup-mountpoints 2> /dev/null | head -n1)
+# TODO: Get Platform SDK root
+# TODO: Handle legacy cases
+HYBRIS_FIXUP_MOUNTS := $(LOCAL_PATH)/../../rpm/dhd/helpers/fixup-mountpoints.sh
 
 
 # Find any fstab files for required partition information.
@@ -160,7 +162,8 @@ $(BOOT_RAMDISK_INIT): $(BOOT_RAMDISK_INIT_SRC) $(ALL_PREBUILT)
 	  -e 's %BOOTLOGO% $(HYBRIS_BOOTLOGO) g' \
 	  -e 's %DEFAULT_OS% $(HYBRIS_B_DEFAULT_OS) g' \
 	  -e 's %ALWAYSDEBUG% $(HYBRIS_B_ALWAYSDEBUG) g' $(BOOT_RAMDISK_INIT_SRC) > $@
-	$(HYBRIS_FIXUP_MOUNTS) "$(TARGET_DEVICE)" "$@"
+	# TODO: Get Platform SDK root
+	$(HYBRIS_FIXUP_MOUNTS) "rpm/mountpoint_mappings/$(TARGET_DEVICE)" "$@"
 	@chmod +x $@
 
 ################################################################
